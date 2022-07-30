@@ -6,14 +6,8 @@ import (
 )
 
 func BenchmarkMandelbrot(b *testing.B) {
-
-	// maxIter := 1000
-	// samples := 200
-	// numBlocks := 64
-	// numThreads := 16
-
 	b.Run(fmt.Sprintf("%vx%v-%s", width, height, "sequential"), func(b *testing.B) {
-		for i := 0; i < 1; i++ {
+		for i := 0; i < b.N; i++ {
 			calculateFractal()
 			err := generatePNG("sequential", imgSerial)
 			if err != nil {
@@ -23,7 +17,7 @@ func BenchmarkMandelbrot(b *testing.B) {
 	})
 
 	b.Run(fmt.Sprintf("%vx%v-%s", width, height, "parallel"), func(b *testing.B) {
-		for i := 0; i < 1; i++ {
+		for i := 0; i < b.N; i++ {
 			workBuffer := make(chan WorkItem, numBlocks)
 			threadBuffer := make(chan bool, numThreads)
 			drawBuffer := make(chan Pixel, totalPixel)
@@ -31,11 +25,11 @@ func BenchmarkMandelbrot(b *testing.B) {
 			workBufferInit(workBuffer)
 			go workersInit(drawBuffer, workBuffer, threadBuffer)
 			go drawThread(drawBuffer)
+
+		}
+		err := generatePNG("parallel", imgParallel)
+		if err != nil {
+			b.Fatalf(`generatePNG(img) %e`, err)
 		}
 	})
-
-	err := generatePNG("parallel", imgParallel)
-	if err != nil {
-		b.Fatalf(`generatePNG(img) %e`, err)
-	}
 }

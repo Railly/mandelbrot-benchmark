@@ -2,11 +2,16 @@ package mandelbrot
 
 import "image"
 
+// maxIter := 1000
+// samples := 200
+// numBlocks := 64
+// numThreads := 16
+
 const (
 	width      = 1024.0
 	height     = 1024.0
 	totalPixel = width * height
-	maxIter    = 1000
+	maxIter    = 100000
 	numBlocks  = 64
 	numThreads = 16
 )
