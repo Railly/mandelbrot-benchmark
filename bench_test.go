@@ -14,7 +14,7 @@ func BenchmarkMandelbrot(b *testing.B) {
 
 	b.Run(fmt.Sprintf("%vx%v-%s", width, height, "sequential"), func(b *testing.B) {
 		for i := 0; i < 1; i++ {
-			calculateFractal(args...)
+			calculateFractal()
 			err := generatePNG("sequential", imgSerial)
 			if err != nil {
 				b.Fatalf(`CreatePNG(fractal) SEQ= %v, error`, err)

@@ -15,20 +15,19 @@ var (
 	args        = []float64{-2.0, -1.0, 1.0, 1.0}
 	imgParallel = image.NewRGBA(image.Rect(0, 0, width, height))
 	imgSerial   = image.NewRGBA(image.Rect(0, 0, width, height))
-	pixelCount  = 0
 )
 
 type Pixel struct {
-	x  int
-	y  int
+	x  float64
+	y  float64
 	cr uint8
 	cg uint8
 	cb uint8
 }
 
 type WorkItem struct {
-	initialX int
-	finalX   int
-	initialY int
-	finalY   int
+	initialX float64
+	finalX   float64
+	initialY float64
+	finalY   float64
 }
